@@ -30,7 +30,8 @@ export default {
             throw new Error("could not create new user")
         }
 
-        console.log("User created:", res.user);
+        res.user.updateProfile({displayName:displayName.value})
+        console.log(res.user);
       } catch (err) {
         error.value=err.message;
         console.log(error.value);
