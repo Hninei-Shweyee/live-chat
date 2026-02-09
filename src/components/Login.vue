@@ -1,26 +1,37 @@
 <template lang="">
     <h2>Login</h2>
-    <form @submit.prevent="Login">
+    <form @submit.prevent="login">
         
         <input type="email" placeholder="email" v-model="email">
         <input type="password" placeholder="password" v-model="password">
+        <div class="error" v-if="error">{{error}}</div>
         <button>Login</button>
     </form>   
 </template>
 <script>
 import {ref} from 'vue'
+
+import useLogin from '@/composables/useLogin'
 export default {
     setup(){
        
-        let email=ref("");
-        let password=ref("");
-        let login=()=>{
-            console.log()
-        }
-        return {email,password,login}
+        const email = ref("");
+        const password = ref("");
+        const { error, signIn } = useLogin();
+
+        const login = async () => {
+            let res= await signIn(email.value,password.value);
+            if(res){
+                    console.log(res.user); 
+                  }
+                   
+            }
+           
+        
+        return {email,password,login,error};
     }
 }
 </script>
-<style lang="">
+<style>
     
 </style>
